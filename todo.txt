@@ -1,0 +1,12 @@
+done
+POST /api/users/login
+POST /api/users
+GET /api/user   =>current user
+PUT /api/user   =>update user
+
+
+
+todo
+GET /api/profiles/:username
+POST /api/profiles/:username/follow
+DELETE /api/profiles/:username/follow
