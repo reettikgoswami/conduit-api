@@ -32,6 +32,10 @@ var userSchema = new Schema({
   following: {
     type: Boolean,
     default: false
+  },
+  article : {
+    type : Schema.Types.ObjectId,
+    ref : "Article"
   }
 });
 
@@ -59,8 +63,3 @@ var User = mongoose.model("User", userSchema);
 
 module.exports = User;
 
-// note
-// username : require , unique
-// email : require , unique
-
-// change the email regx
