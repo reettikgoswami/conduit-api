@@ -9,16 +9,13 @@ var searchProfile = async (req, res, next) => {
     var searchprofile = await User.findOne({
       username: username
     })
-    // 2nd argument change according to the following
-    let following = false
-    if(req.user){
-     following = (searchprofile.follower).includes(req.user.userid);   
-    }
-    res.json(formatting.profile(searchprofile , following));
+
+    res.json({ profile : formatting.profile(searchprofile , req.user.userid) } );
   } catch (error) {
     next(error);
   }
 }
+
 
 var followUser = async (req, res , next)=>{
     // POST /api/profiles/:username/follow   
@@ -28,14 +25,10 @@ var followUser = async (req, res , next)=>{
       var follow_user = await User.findOneAndUpdate({username : follow_userName} , { $addToSet: { follower : req.user.userid } } );
         
       var myProfile = await User.findByIdAndUpdate(req.user.userid , { $addToSet: { following : follow_user.id }})
-   
-     //==================================
-     let followUserCurrentData = await User.findById(follow_user.id);
 
-    let following = false;
-    following = (followUserCurrentData.follower).includes(myProfile.id);   
-     //============================================
-     res.json(formatting.profile(followUserCurrentData , following));
+     let followUserCurrentData = await User.findById(follow_user.id);  
+     
+     res.json({ profile : formatting.profile(followUserCurrentData , myProfile.id)});
 
     } catch (error) {
       next(error);
@@ -50,20 +43,15 @@ var unFollowUser = async (req , res , next)=>{
 
     var myProfile = await User.findByIdAndUpdate(req.user.userid , { $pull: { following : follow_user.id }})
     
-       //==================================
      let followUserCurrentData = await User.findById(follow_user.id);
 
-     let following = false;
-     following = (followUserCurrentData.follower).includes(myProfile.id);   
-      //============================================
-      res.json(formatting.profile(followUserCurrentData , following));
-
-    res.json(myProfile);
+      res.json({ profile :formatting.profile(followUserCurrentData , myProfile.id)});
 
   } catch (error) {
     next(error);
   } 
 }
+
 
 module.exports = {
   searchProfile,
