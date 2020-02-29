@@ -29,15 +29,24 @@ var userSchema = new Schema({
     type: String,
     default: null
   },
-  following: {
-    type: Boolean,
-    default: false
-  },
-  article : {
-    type : Schema.Types.ObjectId,
-    ref : "Article"
-  }
+  follower: [{
+    type: Schema.Types.ObjectId,
+    ref: "User"
+  }],
+  following: [{
+    type: Schema.Types.ObjectId,
+    ref: "User"
+  }],
+  favoritArticle: [{
+    type: Schema.Types.ObjectId,
+    ref: "Article"
+  }],
+  article: [{
+    type: Schema.Types.ObjectId,
+    ref: "Article"
+  }]
 });
+
 
 userSchema.pre("save", async function (next) {
   try {
@@ -58,8 +67,6 @@ userSchema.methods.verifyPassword = async function (password, next) {
   }
 }
 
-
 var User = mongoose.model("User", userSchema);
 
 module.exports = User;
-

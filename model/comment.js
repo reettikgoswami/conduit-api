@@ -14,8 +14,6 @@ var commentSchema = new Schema({
 } , { timestamps: true });
 
 
-
-
 var Comment = mongoose.model("Comment" , commentSchema);
 
 

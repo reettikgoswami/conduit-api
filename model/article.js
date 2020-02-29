@@ -5,7 +5,6 @@ var Schema = mongoose.Schema;
 var articleSchema = new Schema({
   slug : {
     type : String,
-    required : true,
     unique: true
   },
   title : {
@@ -20,20 +19,18 @@ var articleSchema = new Schema({
     type : String,
     require : true
   },
-  tagList :[ {type : String}],
-  favorited : {
-    type: String,
-    default : false
-  },
-  favoritesCount :{
-    type : Number,
-    default : 0
-  },
-  // add the userid or username inside the favoritedBy who like the article
-  favoritedBy :{
-     type : Schema.Types.ObjectId,
-     ref : "User"
-  },
+  tagList :[ {
+    type : String,
+    lowercase : true
+  }],
+  favoritedBy :[{
+   type :  Schema.Types.ObjectId,
+   ref : "User"
+  }],
+  // favoritesCount :{
+  //   type : Number,
+  //   default : 0
+  // },
   author : {
     type : Schema.Types.ObjectId,
     ref : "User"
@@ -59,13 +56,6 @@ var articleSchema = new Schema({
 //   }
 // })
 
-// userSchema.methods.verifyPassword = async function (password, next) {
-//   try {
-//     return await bcrypt.compare(password, this.password);
-//   } catch (error) {
-//     next(error);
-//   }
-// }
 
 
 var Article = mongoose.model("Article" , articleSchema);
