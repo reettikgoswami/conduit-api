@@ -12,4 +12,6 @@ router.get('/user', jwtfunction.validateJWT, userController.getCurrentUser);
 
 router.put("/user", jwtfunction.validateJWT, userController.updateCurrentUser)
 
+
+
 module.exports = router;
