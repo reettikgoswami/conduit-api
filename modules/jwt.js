@@ -9,7 +9,7 @@ let generateJwtToken = async (user, next) => {
     }
     var token = await jwt.sign(payload, process.env.SECRET);
     return token;
-
+    
   } catch (error) {
     next(error)
   }
@@ -29,12 +29,30 @@ let validateJWT = async (req, res, next) => {
       });
     }
   } catch (error) {
-    next(error);
+     res.json('wrong token');
   }
 }
 
 
+let middlewareJWT = async (req , res , next)=>{
+  var token = req.headers["authorization"] || "";
+  try {
+    if (token) {
+      var payload = await jwt.verify(token, process.env.SECRET);
+      req.user = payload;
+      req.user.token = token;
+      next();
+    } 
+      else {
+      next();
+    }
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   generateJwtToken,
-  validateJWT
+  validateJWT,
+  middlewareJWT
 }
