@@ -10,10 +10,11 @@ var mongoose = require("mongoose");
 var userRouter = require("./routes/v1/user")
 var profileRouter = require("./routes/v1/profile");
 var articlesRouter = require("./routes/v1/articles");
-
 // connect to the database
+// localhost connection :mongodb://localhost/conduit-api
+
 mongoose.connect(
-  "mongodb://localhost/conduit-api", {
+  "mongodb+srv://reettik:reettik@conduit-api-5d0xb.mongodb.net/test?retryWrites=true&w=majority", {
     useNewUrlParser: true,
     useUnifiedTopology: true
   },
