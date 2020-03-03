@@ -3,19 +3,20 @@ var Schema = mongoose.Schema;
 
 
 var commentSchema = new Schema({
-  body : {
+  body: {
     type: String,
-    require : true,
+    require: true,
   },
-  author : {
-    type : Schema.Types.ObjectId,
-    ref  : "User"  
+  author: {
+    type: Schema.Types.ObjectId,
+    ref: "User"
   }
-} , { timestamps: true });
+}, {
+  timestamps: true
+});
 
 
-var Comment = mongoose.model("Comment" , commentSchema);
+var Comment = mongoose.model("Comment", commentSchema);
 
 
 module.exports = Comment;
-
