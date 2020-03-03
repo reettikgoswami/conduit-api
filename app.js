@@ -8,6 +8,8 @@ var mongoose = require("mongoose");
 // var usersRouter = require("./routes/users");
 
 var userRouter = require("./routes/v1/user")
+var profileRouter = require("./routes/v1/profile");
+var articlesRouter = require("./routes/v1/articles");
 
 // connect to the database
 mongoose.connect(
@@ -36,16 +38,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 
-
 // router middleware
 
 app.use("/api/v1/", userRouter); // check login /reg
-
-
-// app.use("/users", usersRouter);
-
-
-
-
+app.use("/api/v1/profiles" , profileRouter);
+app.use("/api/v1/articles" , articlesRouter);
 
 module.exports = app;
