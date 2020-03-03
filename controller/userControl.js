@@ -1,5 +1,5 @@
 var User = require("../model/user");
-
+var Article = require("../model/article");
 let jwtfunction = require('../modules/jwt');
 let formatting = require("../modules/formating");
 
@@ -17,6 +17,7 @@ var registration = async (req, res, next) => {
     next(error);
   }
 }
+
 var login = async (req, res, next) => {
   try {
     var {
@@ -51,31 +52,40 @@ var login = async (req, res, next) => {
     next(error);
   }
 }
+
 var getCurrentUser = async (req, res, next) => {
   let currentUser = await User.findById(req.user.userid);
-
   //api responce 
   let Userformat = formatting.users(currentUser, req.headers["authorization"]);
   res.json(Userformat);
 }
+
 var updateCurrentUser = async (req, res, next) => {
-
   try {
-    var oldInfo = await User.findByIdAndUpdate(req.user.userid, req.body.user);
-    var newInfo = await User.findById(req.user.userid);
-
+    var newInfo = await User.findByIdAndUpdate(req.user.userid, req.body.user, {
+      new: true
+    });
     let Userformat = formatting.users(newInfo, req.headers["authorization"]);
     res.json(Userformat);
 
   } catch (error) {
     next(error)
   }
+}
 
+var getTagList = async (req , res  ,next)=>{
+   try {
+    let taglist = await Article.find().distinct("tagList");
+    res.json({tags: taglist});
+   } catch (error) {
+     next(error)
+   }
 }
 
 module.exports = {
   registration,
   login,
   getCurrentUser,
-  updateCurrentUser
+  updateCurrentUser,
+  getTagList
 }

@@ -9,8 +9,11 @@ var searchProfile = async (req, res, next) => {
     var searchprofile = await User.findOne({
       username: username
     })
-
-    res.json({ profile : formatting.profile(searchprofile , req.user.userid) } );
+    if(searchprofile){
+      res.json({ profile : formatting.profile(searchprofile , req.user.userid) } );
+    }else{
+      res.json("Users does not exist");
+    }
   } catch (error) {
     next(error);
   }
