@@ -4,17 +4,20 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var mongoose = require("mongoose");
 
+require('dotenv').config();
 // var indexRouter = require("./routes/index");
 // var usersRouter = require("./routes/users");
+
 
 var userRouter = require("./routes/v1/user")
 var profileRouter = require("./routes/v1/profile");
 var articlesRouter = require("./routes/v1/articles");
 // connect to the database
+
 // localhost connection :mongodb://localhost/conduit-api
 
 mongoose.connect(
-  "mongodb+srv://reettik:reettik@conduit-api-5d0xb.mongodb.net/test?retryWrites=true&w=majority", {
+  process.env.MONGODBCONNECTION , {
     useNewUrlParser: true,
     useUnifiedTopology: true
   },
@@ -26,7 +29,7 @@ mongoose.connect(
   }
 );
 
-require('dotenv').config()
+
 
 var app = express();
 mongoose.set("useCreateIndex", true);
